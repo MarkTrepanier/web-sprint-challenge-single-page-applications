@@ -31,6 +31,7 @@ export default function OrderForm(){
 
 
     const [order, setOrder]= useState(initialOrder);
+    const [sentOrder, setSentOrder] = useState({});
 
     const inputOrder = (name, value) => {
         setOrder({
@@ -43,8 +44,30 @@ export default function OrderForm(){
         inputOrder(name, valueToUse);
     }
 
+    const postNewOrder= newOrder =>{
+        Axios.post('https://reqres.in/api/orders',newOrder)
+        .then(res=>{
+            console.log(res.data);
+            setSentOrder(res.data);
+            setOrder(initialOrder);
+        })
+        .catch(er=>console.log(er))
+    }
+
+    const submit = (evt)=>{
+        evt.preventDefault();
+        const newOrder = {
+            name:order.name.trim(),
+            address:order.address.trim(),
+            size:order.size,
+            toppings: ['sauce','cheese','pepperoni','anchovie','onion','mushroom'].filter(topping=> !!order[topping]),
+            specialInstructions:order.specialInstructions.trim(),
+        }
+        postNewOrder(newOrder);
+    }
+
     return(
-        <FormStyle id='pizza-form'>
+        <FormStyle id='pizza-form' onSubmit={submit}>
             <h1>Make Your Pizza!</h1>
             <div className='personalInfo'>
                 <label>{'Your Name '}
@@ -99,7 +122,7 @@ export default function OrderForm(){
                 </div>
 
                 <div>
-                    <button id='order-button' type='submit'>Order!</button>
+                    <input id='order-button' type='submit'>Order!</input>
                 </div>
             </div>
         </FormStyle>
