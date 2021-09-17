@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Axios from "axios";
-
+import { useHistory } from "react-router";
 
 const FormStyle = styled.div`
 display: flex;
@@ -13,6 +13,8 @@ align-items: flex-start;
     align-items: flex-start;
 }
 `
+
+
 const initialOrder ={
     name:'',
     address:'',
@@ -25,15 +27,14 @@ const initialOrder ={
     mushroom:false,
     specialInstructions:'',
 }
-export default function OrderForm(){
+export default function OrderForm(props){
+    const {errors, validate, setSentOrder}=props;
+    
+const [order, setOrder]= useState(initialOrder);
 
-
-
-
-    const [order, setOrder]= useState(initialOrder);
-    const [sentOrder, setSentOrder] = useState({});
 
     const inputOrder = (name, value) => {
+        validate(name,value);
         setOrder({
             ...order, [name]:value
         })
@@ -43,19 +44,26 @@ export default function OrderForm(){
         const valueToUse = type === 'checkbox' ? checked : value;
         inputOrder(name, valueToUse);
     }
-
+    const history = useHistory();
     const postNewOrder= newOrder =>{
+        console.log('posting order')
         Axios.post('https://reqres.in/api/orders',newOrder)
         .then(res=>{
             console.log(res.data);
             setSentOrder(res.data);
             setOrder(initialOrder);
+            history.push('/confirmation/');
         })
-        .catch(er=>console.log(er))
+        .catch(er=>console.log(er));
     }
 
-    const submit = evt =>{
+    const onSubmit = evt =>{
         evt.preventDefault();
+        
+        submit();
+    }
+
+    const submit =()=>{
         const newOrder = {
             name:order.name.trim(),
             address:order.address.trim(),
@@ -67,7 +75,7 @@ export default function OrderForm(){
     }
 
     return(
-        <FormStyle id='pizza-form' onSubmit={submit}>
+        <FormStyle id='pizza-form' onSubmit={onSubmit}>
             <h1>Make Your Pizza!</h1>
             <div className='personalInfo'>
                 <label>{'Your Name '}
@@ -120,10 +128,11 @@ export default function OrderForm(){
                         <input name='specialInstructions' value={order.specialInstructions} type='text' id='special-text' key='ins' onChange={orderChange}/>
                     </label>
                 </div>
-
+                {errors.length <= 0 ? <></>:<div>{errors.name}</div>}
                 
-                    <input id='order-button' type='submit'/>
-                
+                <div className='submitButton'>
+                    <button type='submit' onClick={submit}>submit</button>
+                </div>
             </div>
         </FormStyle>
     );
