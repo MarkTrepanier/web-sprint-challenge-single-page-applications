@@ -54,7 +54,7 @@ export default function OrderForm(){
         .catch(er=>console.log(er))
     }
 
-    const submit = (evt)=>{
+    const submit = evt =>{
         evt.preventDefault();
         const newOrder = {
             name:order.name.trim(),
@@ -121,9 +121,9 @@ export default function OrderForm(){
                     </label>
                 </div>
 
-                <div>
-                    <input id='order-button' type='submit'>Order!</input>
-                </div>
+                
+                    <input id='order-button' type='submit'/>
+                
             </div>
         </FormStyle>
     );
