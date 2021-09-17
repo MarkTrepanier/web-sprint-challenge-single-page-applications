@@ -1,21 +1,47 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
+import Axios from "axios";
 
 export default function OrderForm(){
-    const ToppingStyle = styled.div`
+    const FormStyle = styled.div`
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        .toppings, .personalInfo{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
     `
+    const initialOrder ={
+        name:'',
+        address:'',
+        size:'',
+        sauce:true,
+        xtraSauce:false,
+        cheese:true,
+        xtraCheese:false,
+        pepperoni:false,
+        anchovie:false,
+        onion:false,
+        mushroom:false,
+        jalapeno:false
+
+    }
+    const [pizza, setPizza]= useState(initialOrder);
+
+    const toppings=['sauce','xtra sauce', 'cheese', 'xtra cheese', 'pepperoni', 'anchovie','onion', 'mushroom', 'jalape\xF1o' ]
+
+
     return(
-        <div id='pizza-form'>
+        <FormStyle id='pizza-form'>
             <h1>Make Your Pizza!</h1>
             <div className='personalInfo'>
                 <label>{'Your Name '}
-                    <input type='text' id='name-input'></input>{/*todo: validation*/}
+                    <input type='text' id='name-input'/>{/*todo: validation*/}
                 </label>
                 <label>{'Your Address '}
-                    <input type='text' id='address-input'></input>{/*todo: validation*/}
+                    <input type='text' id='address-input'/>{/*todo: validation*/}
                 </label>
             </div>
             
@@ -32,39 +58,29 @@ export default function OrderForm(){
                     </select>
                 </label>
 
-                <ToppingStyle className='Toppings'>
+                <div className='toppings'>
                     <h2>Toppings</h2>
                     <h3>+ $0.75 each<span>(cheese and sauce $0.00)</span></h3>
-                    <label>{'sauce '}
-                        <input type='checkbox'></input>
+                    {/*toppings listed above, line 33*/}
+                    {toppings.map(topping=>{
+                        return(
+                            <label>{topping}
+                        <input type='checkbox'/>
                     </label>
-                    <label>{'xtra sauce '}
-                        <input type='checkbox'></input>
+                        )
+                    })}
+                </div>
+
+                <div>
+                    <label>special instruction
+                        <input type='text' id='special-text'/>
                     </label>
-                    <label>{'cheese '}
-                        <input type='checkbox'></input>
-                    </label>
-                    <label>{'xtra cheese '}
-                        <input type='checkbox'></input>
-                    </label>
-                    <label>{'pepperoni '}
-                        <input type='checkbox'></input>
-                    </label>
-                    <label>{'anchovi '}
-                        <input type='checkbox'></input>
-                    </label>
-                    <label>{'onion '}
-                        <input type='checkbox'></input>
-                    </label>
-                    <label>{'mushroom '}
-                        <input type='checkbox'></input>
-                    </label>
-                    <label>{`jalape\xF1o`}
-                        <input type='checkbox'></input>
-                    </label>
-                    
-                </ToppingStyle>
+                </div>
+
+                <div>
+                    <button id='order-button'>Order!</button>
+                </div>
             </div>
-        </div>
+        </FormStyle>
     );
 }
