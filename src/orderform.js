@@ -1,6 +1,12 @@
 import React from "react";
+import styled from "styled-components";
 
 export default function OrderForm(){
+    const ToppingStyle = styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    `
     return(
         <div id='pizza-form'>
             <h1>Make Your Pizza!</h1>
@@ -26,7 +32,7 @@ export default function OrderForm(){
                     </select>
                 </label>
 
-                <div className='Toppings'>
+                <ToppingStyle className='Toppings'>
                     <h2>Toppings</h2>
                     <h3>+ $0.75 each<span>(cheese and sauce $0.00)</span></h3>
                     <label>{'sauce '}
@@ -57,7 +63,7 @@ export default function OrderForm(){
                         <input type='checkbox'></input>
                     </label>
                     
-                </div>
+                </ToppingStyle>
             </div>
         </div>
     );
