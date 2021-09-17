@@ -25,29 +25,37 @@ export default function OrderForm(){
         anchovie:false,
         onion:false,
         mushroom:false,
-        jalapeno:false
-
+        specialInstructions:'',
     }
-    const [pizza, setPizza]= useState(initialOrder);
+    const [order, setOrder]= useState(initialOrder);
 
-    const toppings=['sauce','xtra sauce', 'cheese', 'xtra cheese', 'pepperoni', 'anchovie','onion', 'mushroom', 'jalape\xF1o' ]
+    const toppings=['sauce','xtra sauce', 'cheese', 'xtra cheese', 'pepperoni', 'anchovie','onion', 'mushroom' ]
 
-
+    const inputOrder = (name, value) => {
+        setOrder({
+            ...order, [name]:value
+        })
+    }
+    const orderChange = evt => {
+        const {name, value, checked, type} = evt.target;
+        const valueToUse = type === 'checkbox' ? checked : value;
+        inputOrder(name, valueToUse);
+    }
     return(
         <FormStyle id='pizza-form'>
             <h1>Make Your Pizza!</h1>
             <div className='personalInfo'>
                 <label>{'Your Name '}
-                    <input type='text' id='name-input'/>{/*todo: validation*/}
+                    <input name='name' value={order.name} type='text' id='name-input' key='name' />{/*todo: validation*/}
                 </label>
                 <label>{'Your Address '}
-                    <input type='text' id='address-input'/>{/*todo: validation*/}
+                    <input name='address' value={order.address} type='text' id='address-input'/>{/*todo: validation*/}
                 </label>
             </div>
             
             <div className='pizzaOptions'>
                 <label>{'Pizza Size '}
-                    <select id='size-dropdown'>
+                    <select name = 'size' value ={order.size} key='size' id='size-dropdown'>
                         <option value=''>-choose size-</option>
                         <option value='6"'>personal, 6"; +$2.99.</option>
                         <option value='10"'>small, 10"; +$4.99</option>
@@ -62,23 +70,23 @@ export default function OrderForm(){
                     <h2>Toppings</h2>
                     <h3>+ $0.75 each<span>(cheese and sauce $0.00)</span></h3>
                     {/*toppings listed above, line 33*/}
-                    {toppings.map(topping=>{
+                    {toppings.map((topping, idx)=>{
                         return(
                             <label>{topping}
-                        <input type='checkbox'/>
+                        <input name={topping} value={/*full list of toppings -_- */} key={idx} type='checkbox'/>
                     </label>
                         )
                     })}
                 </div>
 
                 <div>
-                    <label>special instruction
-                        <input type='text' id='special-text'/>
+                    <label>special instructions
+                        <input name='specialInstructions' value={order.specialInstructions} type='text' id='special-text' key='ins'/>
                     </label>
                 </div>
 
                 <div>
-                    <button id='order-button'>Order!</button>
+                    <button id='order-button' type='submit'>Order!</button>
                 </div>
             </div>
         </FormStyle>
