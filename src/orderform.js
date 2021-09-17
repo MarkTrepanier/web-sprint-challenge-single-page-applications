@@ -18,9 +18,7 @@ export default function OrderForm(){
         address:'',
         size:'',
         sauce:true,
-        xtraSauce:false,
         cheese:true,
-        xtraCheese:false,
         pepperoni:false,
         anchovie:false,
         onion:false,
@@ -28,8 +26,6 @@ export default function OrderForm(){
         specialInstructions:'',
     }
     const [order, setOrder]= useState(initialOrder);
-
-    const toppings=['sauce','xtra sauce', 'cheese', 'xtra cheese', 'pepperoni', 'anchovie','onion', 'mushroom' ]
 
     const inputOrder = (name, value) => {
         setOrder({
@@ -66,17 +62,29 @@ export default function OrderForm(){
                     </select>
                 </label>
 
+                {/* //toppings */}
                 <div className='toppings'>
                     <h2>Toppings</h2>
                     <h3>+ $0.75 each<span>(cheese and sauce $0.00)</span></h3>
-                    {/*toppings listed above, line 33*/}
-                    {toppings.map((topping, idx)=>{
-                        return(
-                            <label>{topping}
-                        <input name={topping} value={/*full list of toppings -_- */} key={idx} type='checkbox'/>
+                    <label>{'sauce '}
+                        <input name='sauce' value={order.sauce} key ={'0'} type='checkbox'/>
                     </label>
-                        )
-                    })}
+                    <label>{'cheese '}
+                        <input name='cheese' value={order.cheese} key ={'1'} type='checkbox'/>
+                    </label>
+                    <label>{'pepperoni '}
+                        <input name='pepperoni' value={order.pepperoni} key ={'2'} type='checkbox'/>
+                    </label>
+                    <label>{'anchovie '}
+                        <input name='anchovie' value={order.anchovie} key ={'3'} type='checkbox'/>
+                    </label>
+                    <label>{'onion '}
+                        <input name='onion' value={order.onion} key ={'4'} type='checkbox'/>
+                    </label>
+                    <label>{'mushroom '}
+                        <input name='mushroom' value={order.mushroom} key ={'5'} type='checkbox'/>
+                    </label>
+                    
                 </div>
 
                 <div>
