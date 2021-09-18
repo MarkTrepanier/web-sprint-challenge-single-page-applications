@@ -22,7 +22,7 @@ const App = () => {
   const initialError = {name:'',}
   const [order, setOrder]= useState(initialOrder);
   const [errors, setErrors] = useState(initialError);
-  const [sentOrder, setSentOrder] = useState({});
+  const [sentOrder, setSentOrder] = useState([]);
   
   const validate = (name, value) => {
     Yup.reach(schema, name)
