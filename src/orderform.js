@@ -28,10 +28,7 @@ const initialOrder ={
     specialInstructions:'',
 }
 export default function OrderForm(props){
-    const {errors, validate, setSentOrder}=props;
-    
-const [order, setOrder]= useState(initialOrder);
-
+    const {order, setOrder, errors, validate, setSentOrder}=props;
 
     const inputOrder = (name, value) => {
         validate(name,value);

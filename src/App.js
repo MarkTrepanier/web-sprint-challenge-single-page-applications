@@ -4,10 +4,23 @@ import HomePage from "./homepage";
 import OrderForm from "./orderform";
 import schema from "./schema";
 import * as Yup from 'yup';
+import Confirmation from "./confirmation";
 
-
+const initialOrder ={
+  name:'',
+  address:'',
+  size:'',
+  sauce:true,
+  cheese:true,
+  pepperoni:false,
+  anchovie:false,
+  onion:false,
+  mushroom:false,
+  specialInstructions:'',
+}
 const App = () => {
   const initialError = {name:'',}
+  const [order, setOrder]= useState(initialOrder);
   const [errors, setErrors] = useState(initialError);
   const [sentOrder, setSentOrder] = useState({});
   
@@ -25,11 +38,11 @@ const App = () => {
       </Route>
 
       <Route path = {'/pizza/'}>
-        <OrderForm errors={errors} validate={validate} sentOrder={sentOrder} setSentOrder={setSentOrder}/>
+        <OrderForm order={order} setOrder={setOrder} errors={errors} validate={validate} sentOrder={sentOrder} setSentOrder={setSentOrder}/>
       </Route>
 
       <Route path = {'/confirmation/'}>
-        <OrderForm  sentOrder={sentOrder}/>
+        <Confirmation  sentOrder={sentOrder}/>
       </Route>
     </>
   );
