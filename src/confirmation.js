@@ -11,11 +11,10 @@ export default function Confirmation(props){
                     <h3>{sentOrder.name}</h3>
                     <h3>{sentOrder.adress}</h3>
                     <h4>one {sentOrder.size} pizza with {JSON.stringify(sentOrder.toppings)}</h4>
-                    {/* {sentOrder.toppings.map(topping,idx=>{
-                        return(
-                        <div key={idx}>{topping}</div>
-                        )
-                    })} */}
+                    {sentOrder.specialInstructions === '' ? <></>:
+                    <div>
+                        {sentOrder.specialInstructions}
+                    </div>}
                 </div>
             }
             
